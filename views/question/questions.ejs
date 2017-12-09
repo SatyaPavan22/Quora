@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+<div class="container">
+<div class="row">
+            <div class="col-md-3">
+            <div class="list-group">
+                <a href="/"><li class="list-group-item">Read</li></a>
+                <a href="/questions"><li  class="list-group-item active">Answer</li></a>
+                <a href="/users"><li class="list-group-item">Discover People</li></a>
+                <a href="/topics"><li class="list-group-item">Discover Topics</li></a>
+            </div> 
+            </div>
+            <div class="col-md-8">
+                <% questions.forEach(function(question){ %>
+            <div class="questions  well">
+                <%question.topic.forEach(function(topic){%>
+                <p>Asked in&nbsp;&nbsp;<a href="/topics/<%=topic._id%>"><%=topic.name%></a></p>
+                <%});%>
+                <h2><a href="/questions/<%= question._id %>"><%= question.title %></a></h2>
+                <p class="question-description"><%= question.description %></p>
+                
+            </div>
+            <% }); %>
+            </div>
+            
+</div>
+</div>
+<% include ../partials/footer %>

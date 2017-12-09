@@ -1,0 +1,58 @@
+<% include partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3 left-panel">
+            <div class="list-group">
+                <a href="/"><li class="list-group-item active">Read</li></a>
+                <a href="/questions"><li  class="list-group-item">Answer</li></a>
+                <a href="/users"><li class="list-group-item">Discover People</li></a>
+                <a href="/topics"><li class="list-group-item">Discover Topics</li></a>
+            </div>  
+        </div>
+        <div class="col-md-8 well answers">
+       <h1><a href="/users/<%=user._id%>"><%= user.username %></a></h1>
+        <p><a  href="/questions/new">What is your question?</a></p>
+        </div>
+        
+        
+        <div class="col-md-8">
+         <%user.following.forEach(function(follower){%> 
+             <%follower.answers.forEach(function(answered){%>
+             <div class="well answers">
+                 <h3><a href="/questions/<%=answered.question._id%>"><%=answered.question.title %></a></h3>
+              <div class="answer-heading">
+              <img class="answer-profile-pic" src="/images/elliot.jpg">
+              <a href="/users/<%=answered.answer.author.id%>"><%= answered.answer.author.username %></a>
+              <p>Answered&nbsp;&nbsp<i><%= answered.answer.written.toString().substr(4,12) %></p></i>
+              </div>
+              <p><%- answered.answer.text %></p>
+                 <% if(currentUser.upvotedanswers.indexOf(answered.answer._id) == -1){%>
+              <button class="btn btn-xs btn-primary upvote-button" value="<%= answered.answer._id %>">upvote|<strong><%=answered.answer.upvotes %></strong></button>
+            <%}else{%>
+            <button class="btn btn-xs btn-default upvote-button" value="<%= answered.answer._id %>"disabled>upvoted|<strong><%=answered.answer.upvotes %></strong></button>
+            <%}%>
+            <button class="comment">Comment</button>
+            <button value="<%=answered.answer._id%>" class="allcomments">All Comments</button>
+            <form style="display:none" action="/comment/<%=answered.answer._id%>" method="POST" class="form-inline coment-form">
+                <img class="answer-profile-pic" src="/images/elliot.jpg">
+                <div class="form-group">
+                     <input id="comment-input-id" class="comment-input form-control"name="comment" type="text" placeholder="Add a comment...">
+                     <button class="comment-post btn  btn-primary" value="<%=answered.answer._id%>#<%=currentUser.username%>">Post</button>
+                </div>
+            </form>
+            <div class="comment-show" id="<%=answered.answer._id%>comments">
+            </div>
+            </div>
+             <%});%>
+         <%});%>
+         <%/*user.topicsfollowed.forEach(function(topic){*/%>
+         <%/*topic.questions.forEach(function(question){*/%>
+         <%/*=question.answer*/%>
+         <%/*});%*/%>
+         <% /*});*/%>
+         </div>
+         
+</div>
+</div>
+
+<% include partials/footer %>

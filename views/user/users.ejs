@@ -1,0 +1,39 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/"><li class="list-group-item">Read</li></a>
+                <a href="/questions"><li  class="list-group-item">Answer</li></a>
+                <a href="/users"><li class="list-group-item active">Discover People</li></a>
+                <a href="/topics"><li class="list-group-item">Discover Topics</li></a>
+            </div> 
+            
+        </div>
+               
+                <div class="form-group">
+                     <input id="comment-input-id" class="user-search-box form-control"name="user" autocomplete="off" type="text" placeholder="Search">
+                </div>      
+                
+        <!--input class="search-box," type="text" autocomplete="off" name="user" placeholder="Users"><span class="glyphicon glyphicon-search"></span></input-->
+        <div id="profilecontainer" class="col-md-8">
+            <% users.forEach(function(user){ %>
+            <% if(user.username != currentUser.username){ %>
+            <div class="col-md-3">
+                 <div class="profile-show">
+                     <img class="answer-profile-pic" src="/images/elliot.jpg">
+            <h3><a href="/users/<%= user._id %>"><%= user.username %></a></h3>
+            <p><%= user.about %></p>
+            <%if(currentUser.following.indexOf(user._id) ==-1){%>
+            <button class="btn btn-primary follow-button" value="<%= user.username %>">Follow|<%=user.followers.length%></button>
+            <%}else{%>
+            <button class="btn btn-default follow-button" value="<%= user.username %>" disabled>Following|<%=user.followers.length%></button>
+            <%}%>
+            
+            </div>
+            </div>
+            <% } %>
+            <% }); %>
+            </div>
+    </div>
+</div>

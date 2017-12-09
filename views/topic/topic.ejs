@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3">
+            <div class="list-group">
+                <a href="/"><li class="list-group-item">Read</li></a>
+                <a href="/questions"><li  class="list-group-item">Answer</li></a>
+                <a href="/users"><li class="list-group-item">Discover People</li></a>
+                <a href="/topics"><li class="list-group-item active">Discover Topics</li></a>
+            </div> 
+            
+        </div>
+        <div class="form-group">
+            <input id="comment-input-id" class="topic-search-box form-control"name="topic" autocomplete="off" type="text" placeholder="Search">
+        </div> 
+        <div id="profilecontainer" class="col-md-8">
+            <% topics.forEach(function(topic){ %>
+            <div class="col-md-3">
+                 <div class="profile-show">
+            <h3><a href="/topics/<%= topic._id %>"><%= topic.name %></a></h3>
+            <%if(currentUser.topicsfollowed.indexOf(topic._id) ==-1){%>
+            <button class="btn btn-primary topic-follow-button" value="<%= topic._id %>">Follow|<%=topic.followers%></button>
+            <%}else{%>
+            <button class="btn btn-default topic-follow-button" value="<%= topic._id %>" disabled>Following|<%=topic.followers%></button>
+            <%}%>
+            
+            </div>
+            </div>
+            <% }); %>
+            </div>
+    </div>
+</div>

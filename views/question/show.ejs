@@ -1,0 +1,48 @@
+<% include ../partials/header %>
+<div class="container">
+  <div class="row">
+    <div class = "col-md-3">
+              <div class="list-group">
+                <a href="/"><li class="list-group-item">Read</li></a>
+                <a href="/questions"><li  class="list-group-item">Answer</li></a>
+                <a href="/users"><li class="list-group-item">Discover People</li></a>
+                <a href="/topics"><li class="list-group-item">Discover Topics</li></a>
+            </div>  
+    </div>
+    <div class="col-md-8">
+      <%question.topic.forEach(function(topic){%>
+        <a href="/topics/<%=topic._id%>"><%= topic.name %></a>
+      <%});%>
+  <h1><%= question.title %></h1>
+  <p class="question-description"><%= question.description%></p>
+  <%if(!currentUser.answers.find(function(answer){ %>
+      <% return answer.question.equals(question._id); })){%>
+  <button class="btn btn-primary answer-button">Answer</button>
+  <form  style="display:none"  class="form-group answer-form" method="POST" action="/questions/<%=question._id%>">
+    <textarea  id="textaera" class="form-control" rows="6" name="answer" placeholder="write your answer"></textarea>
+    <input class="btn btn-primary" type="submit">
+  </form>
+  <%}else{%>
+  <p>Answered</p>
+  <%}%>
+  <p><%= question.answer.length %>  Answers%>
+   <hr>
+  <% question.answer.forEach(function(answered){%>
+  <div class="well answers">
+  <div class="answer-heading">
+  <img class="answer-profile-pic" src="/images/elliot.jpg">
+  <a href="/users/<%=answered.author.id%>"><%= answered.author.username %></a>
+  <p>Answered&nbsp;&nbsp<i><%= answered.written.toString().substr(4,12) %></p></i>
+  </div>
+  <p><%- answered.text %></p>
+ <% if(currentUser.upvotedanswers.indexOf(answered._id) == -1){%>
+  <button class="btn btn-xs btn-primary upvote-button" value="<%= answered._id %>">upvote|<strong><%=answered.upvotes %></strong></button>
+  <%}else{%>
+  <button class="btn btn-xs btn-default upvote-button" value="<%= answered._id %>"disabled>upvoted|<strong><%=answered.upvotes %></strong></button>
+  <%}%>
+  </div>
+<% });%>
+</div>
+</div>
+</div>
+<% include ../partials/footer %>

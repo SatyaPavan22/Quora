@@ -1,0 +1,27 @@
+<% include ../partials/header %>
+<div class="container">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+<h1 style="text-align:center">Ask a Question</h1>
+<form action="/questions" method="POST">
+    <div class="form-group">
+    <input class="form-control" type="text" name="question[title]" placeholder="Question">
+    </div>
+    <div class="form-group">
+   <textarea class="form-control" type="text" rows="3" name="question[description]" placeholder="Description"></textarea>
+    </div>
+    <div class="form-group">
+    <input  list="topics" autocomplete="off" name="topic" placeholder="Topic" id="question-topic" class="form-control">
+    <datalist id="topics"></datalist>
+ 
+    </div>
+    <div class="form-group">
+    <button class="form-control btn btn-lg btn-primary btn-block">Ask</button>
+    </div>
+    </div>
+    </div>
+</form>
+</div>
+</div>
+<% include ../partials/footer %>
